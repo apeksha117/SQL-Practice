@@ -76,7 +76,9 @@ Explanation:
 solution-
 # Write your MySQL query statement below
 
-select Content.title from
+# Write your MySQL query statement below
+
+select distinct Content.title from
 Content inner join TVProgram
 on Content.content_id= TVProgram.content_id
-where Content.Kids_content='Y' and year(program_date)=2020 and month(program_date)=06
+where Content.Kids_content='Y' and year(program_date)=2020 and month(program_date)=06 and Content.content_type='Movies'
