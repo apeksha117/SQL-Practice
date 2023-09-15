@@ -47,3 +47,9 @@ For session_id 1, 2, and 3 have a duration greater or equal than 0 minutes and l
 For session_id 4 has a duration greater or equal than 5 minutes and less than 10 minutes.
 There is no session with a duration greater than or equal to 10 minutes and less than 15 minutes.
 For session_id 5 has a duration greater than or equal to 15 minutes.
+
+Solution-
+(select "[0-5>" as bin, sum(case WHEN (duration/60) < 5 THEN 1 else 0 END) total from Sessions) union
+(select "[5-10>" as bin, sum(case when ((duration/60) >= 5 and (duration/60) < 10) THEN 1 else 0 END) total from Sessions) union
+(select "[10-15>" as bin, sum(case WHEN ((duration/60) >= 10 and (duration/60) < 15) THEN 1 else 0 END) total from Sessions) union
+(select "15 or more" as bin, sum(case WHEN (duration/60) >=15 THEN 1 else 0 END) total from Sessions)
