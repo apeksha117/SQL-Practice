@@ -38,3 +38,10 @@ Output:
 +--------+
 Explanation: 
 If we decompress the Numbers table, we will get [0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3], so the median is (0 + 0) / 2 = 0.
+
+solution-
+select 
+avg(temp.num) as median
+from
+(select num, frequency, sum(frequency) over(order by num asc) as cum_freq, sum(frequency) over()/2 as med_freq from Numbers) temp
+WHERE med_freq BETWEEN (cum_freq - frequency) AND cum_freq;
