@@ -45,3 +45,17 @@ avg(temp.num) as median
 from
 (select num, frequency, sum(frequency) over(order by num asc) as cum_freq, sum(frequency) over()/2 as med_freq from Numbers) temp
 WHERE med_freq BETWEEN (cum_freq - frequency) AND cum_freq;
+
+Python-
+
+import pandas as pd
+
+def median_frequency(numbers: pd.DataFrame) -> pd.DataFrame:
+  numbers["cum_sum"]=numbers["frequency"].cumsum()
+  numbers["center"]=numbers["frequency"].sum()/2
+  for i in range(len(numbers)):
+    if numbers["center"][i]>(numbers["cum_sum"][i] - numbers["frequency"][i]) and numbers["center"][i]<numbers["cum_sum"][i]:
+      median= numbers["num"][i]
+      return pd.DataFrame({'median': median}, index=[0])
+
+    
