@@ -88,3 +88,13 @@ def get_the_question(df: pd.DataFrame) -> pd.DataFrame:
 
     result_df = pd.DataFrame({'survey_log': [question_id]})
     return result_df
+
+
+import pandas as pd
+
+def get_the_question(df: pd.DataFrame) -> pd.DataFrame:
+  df1=pd.pivot_table(survey_log, index='question_id', columns='action', values='id', aggfunc='count').fillna(0)
+  df1['answer_rate']=df1['answer']/df1['show']
+  question_id=df1[df1.answer_rate==df1.answer_rate.max()].index.min()
+  result_df = pd.DataFrame({'survey_log': [question_id]})
+  return result_df
